@@ -14,9 +14,9 @@ const displayAllData = categories => {
         // categoryNews(category.category_id);
         const div = document.createElement('div')
         div.classList.add('col')
-        div.innerHTML = `
-                        <a onclick="setDataById('${category.category_id ? category.category_id : 'No product found'}')"> ${category.category_name} </a>`
+        div.innerHTML = `<a onclick="setDataById('${category.category_id}')"> ${category.category_name} </a>`
         navContainer.appendChild(div)
+        toggleSpinner(true);
     })
 }
 loadData()
@@ -29,33 +29,26 @@ const setDataById = (id) => {
 }
 
 const displayDetails = details => {
-
-const detail= details.data;
+    const detail = details.data;
 
     // <!---------------------------- Found total Category section start  -------------------------------->
     const displayTotalCategory = document.getElementById('display-category')
 
-    const noFound= document.getElementById('warning-massage')
-    
-if(detail.length===0){
-   noFound.classList.remove('d-none')
-}
-else{
+    const noFound = document.getElementById('warning-massage')
 
-    noFound.classList.add('d-none')
-}
-
-
-
-
+    if (detail.length === 0) {
+        noFound.classList.remove('d-none')
+    }
+    else {
+        noFound.classList.add('d-none')
+    }
 
     displayTotalCategory.innerHTML = `
-                 <div class="py-4 ps-5 fs-3 text-primary fw-semibold border border-info  rounded-2">
+                 <div class="py-4 ps-5 fs-3 p-2 bg-success text-dark bg-opacity-10 fw-semibold border border-info rounded-2">
                      Total  ${detail.length} items producet found !!! 
                 </div>`
 
     // <!---------------------------- Found total Category section end  -------------------------------->
-
 
 
     const displayCategory = document.getElementById('details-body')
@@ -65,7 +58,7 @@ else{
         const div = document.createElement('div')
 
         div.innerHTML = `
-                <div class="card mb-4">
+                <div class="card mb-4 shadow-lg">
                     <div class="row">
                         <div class="col-md-3">
                             <img src="${element.thumbnail_url}" style="height:300px;" class="img-fluid rounded-start" alt="...">
@@ -105,15 +98,24 @@ else{
             `
         displayCategory.appendChild(div)
 
+        toggleSpinner(false);
+
     });
 
 }
 
-    // // <!---------------------------- Found total Category section start  -------------------------------->
-    // const displayTotalCategory = document.getElementById('display-category')
-    // displayTotalCategory.innerHTML = `
-    //              <div class="py-4 ps-5 fs-3 border border-info  rounded-2">
-    //                  ${details.length} items found for 
-    //             </div>`
 
-    // // <!---------------------------- Found total Category section end  -------------------------------->
+// spinner 
+
+
+const toggleSpinner = isLoading => {
+    const loadingSection = document.getElementById('spinner');
+    if (isLoading) {
+        loadingSection.classList.remove('d-none')
+
+    }
+    else {
+        loadingSection.classList.add('d-none')
+    }
+}
+
