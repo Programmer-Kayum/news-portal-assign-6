@@ -3,61 +3,64 @@ const loadData = () => {
     fetch(url)
         .then(res => res.json())
         // .then(data => console.log(data.data.news_category[1].category_name))
-        .then(data => displayAllData(data))
-
+        .then(data => displayAllData(data.data.news_category))
 }
 
+const displayAllData = categories => {
 
-// load Data set all category like navbar 
-
-const displayAllData = allData => {
     const navContainer = document.getElementById('nav-container');
-    const div = document.createElement('div')
-    div.classList.add('row');
-    div.innerHTML = `
+    categories.forEach(category => {
 
-                    <div class="col">${allData.data.news_category[0].category_name}</div>
-                    <div class="col">${allData.data.news_category[1].category_name}</div>
-                    <div class="col">${allData.data.news_category[2].category_name}</div>
-                    <div class="col">${allData.data.news_category[3].category_name}</div>
-                    <div class="col">${allData.data.news_category[4].category_name}</div>
-                    <div class="col">${allData.data.news_category[5].category_name}</div>
-                    <div class="col">${allData.data.news_category[6].category_name}</div>
-                    <div class="col">${allData.data.news_category[7].category_name}</div>
-        `
-    navContainer.appendChild(div)
-    // console.log(element.category_name)
+        // categoryNews(category.category_id);
+        const div = document.createElement('div')
+        div.classList.add('col')
+        div.innerHTML = `
+                        <a onclick="setDataById('${category.category_id ? category.category_id : 'No product found'}')"> ${category.category_name} </a>`
+        navContainer.appendChild(div)
+    })
 }
 loadData()
 
-
-
-const setDataById = () => {
-
-    const url = `https://openapi.programming-hero.com/api/news/category/01`
-    // const url = `https://openapi.programming-hero.com/api/news/category/${id}`
+const setDataById = (id) => {
+    const url = `https://openapi.programming-hero.com/api/news/category/${id}`
     fetch(url)
         .then(res => res.json())
-        .then(data => displayDetails(data.data))
+        .then(data => displayDetails(data))
 }
 
 const displayDetails = details => {
-    // console.log(details)
 
-
+const detail= details.data;
 
     // <!---------------------------- Found total Category section start  -------------------------------->
     const displayTotalCategory = document.getElementById('display-category')
+
+    const noFound= document.getElementById('warning-massage')
+    
+if(detail.length===0){
+   noFound.classList.remove('d-none')
+}
+else{
+
+    noFound.classList.add('d-none')
+}
+
+
+
+
+
     displayTotalCategory.innerHTML = `
-                 <div class="py-4 ps-5 fs-3 border border-info  rounded-2">
-                     ${details.length} items found for category Entertainment
+                 <div class="py-4 ps-5 fs-3 text-primary fw-semibold border border-info  rounded-2">
+                     Total  ${detail.length} items producet found !!! 
                 </div>`
 
     // <!---------------------------- Found total Category section end  -------------------------------->
 
 
+
     const displayCategory = document.getElementById('details-body')
-    details.forEach(element => {
+    displayCategory.textContent = '';
+    detail.forEach(element => {
         console.log(element)
         const div = document.createElement('div')
 
@@ -93,8 +96,6 @@ const displayDetails = details => {
 
 
                                     </div>
-                                
-
                             </div>
                             
                         </div>
@@ -102,14 +103,17 @@ const displayDetails = details => {
                 </div>
 
             `
-
-
         displayCategory.appendChild(div)
 
     });
 
 }
 
+    // // <!---------------------------- Found total Category section start  -------------------------------->
+    // const displayTotalCategory = document.getElementById('display-category')
+    // displayTotalCategory.innerHTML = `
+    //              <div class="py-4 ps-5 fs-3 border border-info  rounded-2">
+    //                  ${details.length} items found for 
+    //             </div>`
 
-
-setDataById();
+    // // <!---------------------------- Found total Category section end  -------------------------------->
