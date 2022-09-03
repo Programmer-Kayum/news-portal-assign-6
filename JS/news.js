@@ -80,15 +80,13 @@ const displayDetails = details => {
     const displayCategory = document.getElementById('details-body')
     displayCategory.textContent = '';
     detail.forEach(element => {
-        console.log(element)
-
         const div = document.createElement('div')
 
         div.innerHTML = `
                 <div class="card mb-4 shadow-lg">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="${element.thumbnail_url}" style="height:300px;" class="img-fluid rounded-start" alt="...">
+                            <img class="text-center" src="${element.thumbnail_url}" style="height:300px;" class="img-fluid rounded-start" alt="...">
                         </div>
                         <div class="col-md-9">
                             <div class="card-body">
@@ -96,21 +94,18 @@ const displayDetails = details => {
                                     <p class="card-text"> ${element.details.slice(0, 350)}... </p>
 
                                 
-                                    <div class="d-flex flex-row mt-3">
+                                    <div class="d-flex d-inline-flex align-items-sm-start  justify-content-center mt-3">
                                         <div class="mt-4"> 
                                              <img class="rounded-pill" src="${element.author.img}" alt="" width="60" height="60">
-                                        </div>
-                                        <div class="mt-4 ms-4">
                                              <p class="lh-sm"> ${element.author.name ? element.author.name : 'name not found'}</p> 
-                                             <p class="lh-sm"> ${element.author.published_date} </p>
                                         </div>
 
 
-                                        <div class="mt-4" style="margin-left: 150px;"> 
+                                        <div class=" mt-3 mx-5"> 
                                         <img class="rounded-pill" src="Photos/download.png" alt=""  width="30" height="30" > <h4>${element.total_view ? element.total_view : 'not view found'}</h4>
                                         </div>
 
-                                        <div class="mt-5" style="margin-left: 250px;"> 
+                                        <div class="m-5 " > 
                                         <button onclick="setDataById('${element.category_id}')"  type="button" class="btn btn-warning" data-bs-toggle="modal" 
                                          data-bs-target="#exampleModal">Details</button>
                                          </div>
@@ -129,20 +124,21 @@ const displayDetails = details => {
             `
         displayCategory.appendChild(div)
 
-        // toggleSpinner(false);
 
 
+        console.log(element)
 
 
 
         const modalBody = document.getElementById('modal-body')
         modalBody.innerHTML = `
-        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">${element.title.slice(0, 45)}...</h5>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">${element.title.slice(0, 50)}...</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            
                         </div>
                         <div class="modal-body">
-
+                        <img class="text-center" src="${element.author.img}" style=" height: 200px; width: 200px;border-radius: 50%; margin-left:100px" class="img-fluid rounded-start" alt="...">
                             <h4>Rating : ${element.rating.number} </h4>
                             <h4>Badge : ${element.rating.badge} </h4>
                             <h4>Author : ${element.author.name ? element.author.name : 'name not found'} </h4>
@@ -152,10 +148,7 @@ const displayDetails = details => {
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                        </div>
-        
-
-        `
+                        </div>`
 
     });
 
@@ -171,7 +164,7 @@ const displayDetails = details => {
 const toggleSpinner = isLoading => {
     const loadingSection = document.getElementById('spinner');
     if (isLoading) {
-        loadingSection.classList.remove('d-none')
+        // loadingSection.classList.remove('d-none')
 
     }
     else {
