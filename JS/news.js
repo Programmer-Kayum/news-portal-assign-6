@@ -45,7 +45,6 @@ const setDataById = (id) => {
 // <<<<<<<<----------------Display load main API by ID  ------------------>>>>>>>>>
 
 
-
 const displayDetails = details => {
     const detail = details.data;
 
@@ -74,19 +73,17 @@ const displayDetails = details => {
     const displayCategory = document.getElementById('details-body')
     displayCategory.textContent = '';
 
-    // const x = ArrayofObject.short(a, b => (
 
-    //     a.total_view - b.total_view
 
-    //     ))
+    detail.sort(function (a, b) {
+        const x = b.total_view - a.total_view;
+        return x;
+
+    })
 
     detail.forEach(element => {
 
-        // console.log(element)
-
-
         const div = document.createElement('div')
-
         div.innerHTML = `
                 <div class="card mb-4 shadow-lg">
                     <div class="row">
@@ -122,11 +119,7 @@ const displayDetails = details => {
                         </div>
                     </div>
                 </div>`
-
-
         displayCategory.appendChild(div)
-
-
         toggleSpinner(false);
 
     });
@@ -152,11 +145,6 @@ const toggleSpinner = isLoading => {
 
 
 
-
-
-
-
-
 // blog Question section strat---------------->>>>>
 
 document.getElementById('blog').addEventListener('click', function () {
@@ -165,6 +153,7 @@ document.getElementById('blog').addEventListener('click', function () {
     const div = document.createElement('div')
     div.classList.add('border')
     div.innerHTML = `
+    
     <h2> Q1.Differences between var, let, and const ?</h2>
 
     <div class="container text-center ">
