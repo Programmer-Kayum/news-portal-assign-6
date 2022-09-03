@@ -1,10 +1,15 @@
+
+// <<<<<<<----------------------- load main API link ------------------------>>>>>>>>>
+
 const loadData = () => {
     const url = 'https://openapi.programming-hero.com/api/news/categories'
     fetch(url)
         .then(res => res.json())
-        // .then(data => console.log(data.data.news_category[1].category_name))
         .then(data => displayAllData(data.data.news_category))
 }
+
+
+// <<<<<<<<--------------Display load main API link ------------------->>>>>>>>>
 
 const displayAllData = categories => {
 
@@ -21,6 +26,11 @@ const displayAllData = categories => {
 }
 loadData()
 
+
+
+
+// <<<<<<<<--------------------- load main API by ID  ------------------>>>>>>>>>
+
 const setDataById = (id) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`
     fetch(url)
@@ -28,12 +38,21 @@ const setDataById = (id) => {
         .then(data => displayDetails(data))
 }
 
+
+
+// <<<<<<<<----------------Display load main API by ID  ------------------>>>>>>>>>
+
+
+
 const displayDetails = details => {
     const detail = details.data;
 
-    // <!---------------------------- Found total Category section start  -------------------------------->
-    const displayTotalCategory = document.getElementById('display-category')
 
+
+
+
+    // <<<<---------------------------- Found total Category section start  -------------------------------->
+    const displayTotalCategory = document.getElementById('display-category')
     const noFound = document.getElementById('warning-massage')
 
     if (detail.length === 0) {
@@ -47,14 +66,16 @@ const displayDetails = details => {
                  <div class="py-4 ps-5 fs-3 p-2 bg-success text-dark bg-opacity-10 fw-semibold border border-info rounded-2">
                      Total  ${detail.length} items producet found !!! 
                 </div>`
-
     // <!---------------------------- Found total Category section end  -------------------------------->
 
+
+    //<<<<<----------------- Display Main News Card section --------------->>>>>>>
 
     const displayCategory = document.getElementById('details-body')
     displayCategory.textContent = '';
     detail.forEach(element => {
         console.log(element)
+
         const div = document.createElement('div')
 
         div.innerHTML = `
@@ -74,18 +95,21 @@ const displayDetails = details => {
                                              <img class="rounded-pill" src="${element.author.img}" alt="" width="60" height="60">
                                         </div>
                                         <div class="mt-4 ms-4">
-                                             <p class="lh-sm"> ${element.author.name}</p> 
+                                             <p class="lh-sm"> ${element.author.name ? element.author.name : 'name not found'}</p> 
                                              <p class="lh-sm"> ${element.author.published_date} </p>
                                         </div>
 
 
                                         <div class="mt-4" style="margin-left: 150px;"> 
-                                        <img class="rounded-pill" src="Photos/download.png" alt=""  width="30" height="30" > <h4>${element.total_view}</h4>
+                                        <img class="rounded-pill" src="Photos/download.png" alt=""  width="30" height="30" > <h4>${element.total_view ? element.total_view : 'not view found'}</h4>
                                         </div>
 
                                         <div class="mt-5" style="margin-left: 250px;"> 
-                                        <button type="button" class="btn btn-warning">Details</button>
+                                        <button onclick="setDataById('${element.category_id}')"  type="button" class="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#exampleModal">Details</button>
                                          </div>
+
+                                         
+                                     </button>
 
 
                                     </div>
@@ -100,13 +124,45 @@ const displayDetails = details => {
 
         toggleSpinner(false);
 
+
+        const modalBody = document.getElementById('modal-body')
+        modalBody.innerHTML = `
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">${element.title.slice(0, 45)}...</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <h4>Rating : ${element.rating.number} </h4>
+                    <h4>Badge : ${element.rating.badge} </h4>
+                    <h4>Author : ${element.author.name ? element.author.name : 'name not found'} </h4>
+                    <h4>Total View: ${element.total_view ? element.total_view : 'not view found'} </h4>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
+        `
+
+
+
     });
 
 }
 
 
-// spinner 
-
+// <<<<<<<<<<<<-----------spinner ------------>>>>>>>>>>>>
 
 const toggleSpinner = isLoading => {
     const loadingSection = document.getElementById('spinner');
@@ -118,4 +174,6 @@ const toggleSpinner = isLoading => {
         loadingSection.classList.add('d-none')
     }
 }
+
+
 
