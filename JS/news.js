@@ -137,30 +137,24 @@ const displayDetails = details => {
 
         const modalBody = document.getElementById('modal-body')
         modalBody.innerHTML = `
+        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">${element.title.slice(0, 45)}...</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h4>Rating : ${element.rating.number} </h4>
+                            <h4>Badge : ${element.rating.badge} </h4>
+                            <h4>Author : ${element.author.name ? element.author.name : 'name not found'} </h4>
+                            <h4>Total View: ${element.total_view ? element.total_view : 'not view found'} </h4>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
         
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">${element.title.slice(0, 45)}...</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    
-                    <h4>Rating : ${element.rating.number} </h4>
-                    <h4>Badge : ${element.rating.badge} </h4>
-                    <h4>Author : ${element.author.name ? element.author.name : 'name not found'} </h4>
-                    <h4>Total View: ${element.total_view ? element.total_view : 'not view found'} </h4>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
         `
 
     });
