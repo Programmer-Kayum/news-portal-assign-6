@@ -6,6 +6,7 @@ const loadData = () => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayAllData(data.data.news_category))
+        .catch(error => alert(error))
 }
 
 
@@ -21,7 +22,11 @@ const displayAllData = categories => {
         div.classList.add('col')
         div.innerHTML = `<a onclick="setDataById('${category.category_id}')"> ${category.category_name} </a>`
         navContainer.appendChild(div)
-        toggleSpinner(true);
+
+
+
+        // toggleSpinner(true);
+
     })
 }
 loadData()
@@ -36,6 +41,7 @@ const setDataById = (id) => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayDetails(data))
+        .catch(error => alert(error))
 }
 
 
@@ -105,7 +111,8 @@ const displayDetails = details => {
                                         </div>
 
                                         <div class="mt-5" style="margin-left: 250px;"> 
-                                        <button onclick="setDataById('${element.category_id}')"  type="button" class="btn btn-warning" data-bs-toggle="modal"  data-bs-target="#exampleModal">Details</button>
+                                        <button onclick="setDataById('${element.category_id}')"  type="button" class="btn btn-warning" data-bs-toggle="modal" 
+                                         data-bs-target="#exampleModal">Details</button>
                                          </div>
 
                                          
@@ -122,7 +129,10 @@ const displayDetails = details => {
             `
         displayCategory.appendChild(div)
 
-        toggleSpinner(false);
+        // toggleSpinner(false);
+
+
+
 
 
         const modalBody = document.getElementById('modal-body')
@@ -151,15 +161,15 @@ const displayDetails = details => {
             </div>
         </div>
     </div>
-        
-        
         `
-
-
 
     });
 
 }
+
+
+
+
 
 
 // <<<<<<<<<<<<-----------spinner ------------>>>>>>>>>>>>
