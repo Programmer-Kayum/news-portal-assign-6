@@ -177,3 +177,78 @@ const toggleSpinner = isLoading => {
 
 
 
+// blog 
+
+document.getElementById('blog').addEventListener('click', function () {
+    const anserBody = document.getElementById('question section')
+    anserBody.textContent = '';
+    const div = document.createElement('div')
+    div.classList.add('border')
+    div.innerHTML = `
+ 
+ 
+ 
+    <h2> Q1.Differences between var, let, and const ?</h2>
+
+    <div class="container text-center ">
+        <div class="row ">
+            <div class="col shadow-lg m-2">
+                <h3>Var</h3>
+                <hr>
+                <p>The scope of a var variable is functional scope.</p>
+                <p>It can be updated and re-declared into the scope.</p>
+                <p>It can be declared without initialization.</p>
+
+            </div>
+            <div class="col shadow-lg m-2">
+                <h3>Let</h3>
+                <hr>
+                <p>The scope of a let variable is block scope.</p>
+                <p>It can be updated but cannot be re-declared into the scope.</p>
+                <p>It can be declared without initialization.</p>
+            </div>
+            <div class="col shadow-lg m-2">
+                <h3>Const</h3>
+                <hr>
+                <p>The scope of a const variable is block scope.</p>
+                <p>It cannot be updated or re-declared into the scope.</p>
+                <p>It cannot be declared without initialization.</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="border py-3">
+        <h2>Q2. Why we use template String ?</h2>
+        <div class="shadow-lg m-2 p-4">
+            <p>String concatenation can be done using several different methods. The + operator and template
+                literals are a couple of these methods. Template literals make it easier to embed variables into
+                a
+                string.</p>
+        </div>
+    </div>
+
+
+    <div class="border py-3">
+        <h2>Q3. Differences Between Arrow and Regular Functions ?</h2>
+        <div class="shadow-lg m-2 p-4">
+            <p>this value inside a regular function is dynamic and depends on the invocation. But this inside
+                the arrow function is bound lexically and equals to this of the outer function.
+
+                arguments object inside the regular functions contains the list of arguments. The arrow
+                function, on the opposite, doesn't define arguments (but you can easily access the arrow
+                function arguments using a rest parameter ...args).
+
+                If the arrow function has one expression, then the expression is returned implicitly, even
+                without using the return keyword.</p>
+        </div>
+    </div>
+ 
+ 
+ `
+    anserBody.appendChild(div)
+
+})
+question();
+
