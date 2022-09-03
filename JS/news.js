@@ -20,12 +20,10 @@ const displayAllData = categories => {
         // categoryNews(category.category_id);
         const div = document.createElement('div')
         div.classList.add('col')
-        div.innerHTML = `<a onclick="setDataById('${category.category_id}')"> ${category.category_name} </a>`
+        div.innerHTML = `<a onclick="setDataById('${category.category_id}')"> ${category.category_name} </a>
+        `
+
         navContainer.appendChild(div)
-
-
-
-        // toggleSpinner(true);
 
     })
 }
@@ -53,10 +51,6 @@ const setDataById = (id) => {
 const displayDetails = details => {
     const detail = details.data;
 
-
-
-
-
     // <<<<---------------------------- Found total Category section start  -------------------------------->
     const displayTotalCategory = document.getElementById('display-category')
     const noFound = document.getElementById('warning-massage')
@@ -66,6 +60,7 @@ const displayDetails = details => {
     }
     else {
         noFound.classList.add('d-none')
+        toggleSpinner(true); 7
     }
 
     displayTotalCategory.innerHTML = `
@@ -79,7 +74,18 @@ const displayDetails = details => {
 
     const displayCategory = document.getElementById('details-body')
     displayCategory.textContent = '';
+
+    // const x = ArrayofObject.short(a, b => (
+
+    //     a.total_view - b.total_view
+
+    //     ))
+
     detail.forEach(element => {
+
+        // console.log(element)
+
+
         const div = document.createElement('div')
 
         div.innerHTML = `
@@ -106,14 +112,11 @@ const displayDetails = details => {
                                         </div>
 
                                         <div class="m-5 " > 
-                                        <button onclick="setDataById('${element.category_id}')"  type="button" class="btn btn-warning" data-bs-toggle="modal" 
+                                        <button onclick="dataLoadById('${element._id}')"  type="button" class="btn btn-warning" data-bs-toggle="modal" 
                                          data-bs-target="#exampleModal">Details</button>
                                          </div>
-
                                          
                                      </button>
-
-
                                     </div>
                             </div>
                             
@@ -124,38 +127,15 @@ const displayDetails = details => {
             `
         displayCategory.appendChild(div)
 
+        toggleSpinner(false)
 
 
-        console.log(element)
 
 
-
-        const modalBody = document.getElementById('modal-body')
-        modalBody.innerHTML = `
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">${element.title.slice(0, 50)}...</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            
-                        </div>
-                        <div class="modal-body">
-                        <img class="text-center" src="${element.author.img}" style=" height: 200px; width: 200px;border-radius: 50%; margin-left:100px" class="img-fluid rounded-start" alt="...">
-                            <h4>Rating : ${element.rating.number} </h4>
-                            <h4>Badge : ${element.rating.badge} </h4>
-                            <h4>Author : ${element.author.name ? element.author.name : 'name not found'} </h4>
-                            <h4>Total View: ${element.total_view ? element.total_view : 'not view found'} </h4>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                        </div>`
 
     });
 
 }
-
-
-
 
 
 
@@ -164,7 +144,7 @@ const displayDetails = details => {
 const toggleSpinner = isLoading => {
     const loadingSection = document.getElementById('spinner');
     if (isLoading) {
-        // loadingSection.classList.remove('d-none')
+        loadingSection.classList.remove('d-none')
 
     }
     else {
@@ -174,7 +154,7 @@ const toggleSpinner = isLoading => {
 
 
 
-// blog 
+// blog Question section strat---------------->>>>>
 
 document.getElementById('blog').addEventListener('click', function () {
     const anserBody = document.getElementById('question section')
@@ -182,9 +162,6 @@ document.getElementById('blog').addEventListener('click', function () {
     const div = document.createElement('div')
     div.classList.add('border')
     div.innerHTML = `
- 
- 
- 
     <h2> Q1.Differences between var, let, and const ?</h2>
 
     <div class="container text-center ">
@@ -240,12 +217,46 @@ document.getElementById('blog').addEventListener('click', function () {
                 If the arrow function has one expression, then the expression is returned implicitly, even
                 without using the return keyword.</p>
         </div>
-    </div>
- 
- 
- `
+    </div>`
+
     anserBody.appendChild(div)
+});
 
-})
-question();
 
+
+
+
+
+// ---------------------------------- Modal section start ------------>>>>>>>  
+
+
+const dataLoadById = (id) => {
+    const url = `https://openapi.programming-hero.com/api/news/${id}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayModalData(data.data))
+}
+
+
+const displayModalData = news => {
+    news.forEach(elements => {
+        const modalBody = document.getElementById('modal-body')
+        modalBody.innerHTML = `
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"> ${elements.title}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <img class="text-center" src="${elements.thumbnail_url}" style=" height: 200px; width: 200px;border-radius: 50%; margin-left:100px" class="img-fluid rounded-start" alt="...">
+                            <h4>Rating : ${elements.rating.number} </h4>
+                            <h4>Badge : ${elements.rating.badge} </h4>
+                            <h4>Author : ${elements.author.name ? elements.author.name : 'name not found'} </h4>
+                            <h4>Total View: ${elements.total_view ? elements.total_view : 'not view found'} </h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>`
+    })
+}
+
+// ---------------------------------- Modal section end ------------>>>>>>>  
