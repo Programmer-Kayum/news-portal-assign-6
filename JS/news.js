@@ -17,14 +17,12 @@ const displayAllData = categories => {
     const navContainer = document.getElementById('nav-container');
     categories.forEach(category => {
 
-        // categoryNews(category.category_id);
         const div = document.createElement('div')
         div.classList.add('col')
-        div.innerHTML = `<a onclick="setDataById('${category.category_id}')"> ${category.category_name} </a>
+        div.innerHTML = `<a onclick="setDataById('${category.category_id}'), toggleSpinner(true)";>
+         ${category.category_name} </a>
         `
-
         navContainer.appendChild(div)
-
     })
 }
 loadData()
@@ -57,10 +55,11 @@ const displayDetails = details => {
 
     if (detail.length === 0) {
         noFound.classList.remove('d-none')
+        toggleSpinner(false);
     }
     else {
         noFound.classList.add('d-none')
-        toggleSpinner(true); 7
+
     }
 
     displayTotalCategory.innerHTML = `
@@ -107,7 +106,7 @@ const displayDetails = details => {
                                         </div>
 
 
-                                        <div class=" mt-3 mx-5"> 
+                                        <div class=" mt-5 mx-5"> 
                                         <img class="rounded-pill" src="Photos/download.png" alt=""  width="30" height="30" > <h4>${element.total_view ? element.total_view : 'not view found'}</h4>
                                         </div>
 
@@ -122,16 +121,13 @@ const displayDetails = details => {
                             
                         </div>
                     </div>
-                </div>
+                </div>`
 
-            `
+
         displayCategory.appendChild(div)
 
-        toggleSpinner(false)
 
-
-
-
+        toggleSpinner(false);
 
     });
 
@@ -151,6 +147,13 @@ const toggleSpinner = isLoading => {
         loadingSection.classList.add('d-none')
     }
 }
+
+
+
+
+
+
+
 
 
 
@@ -235,7 +238,10 @@ const dataLoadById = (id) => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayModalData(data.data))
+        .catch(error => alert(error))
 }
+
+
 
 
 const displayModalData = news => {
